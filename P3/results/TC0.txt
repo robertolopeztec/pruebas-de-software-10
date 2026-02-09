@@ -1,0 +1,2 @@
+WORD: pepe | COUNT 2
+WORD: sandia | COUNT 1

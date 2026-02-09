@@ -1,0 +1,6 @@
+************* Module computeStatistics
+P1/source/computeStatistics.py:1:0: C0103: Module name "computeStatistics" doesn't conform to snake_case naming style (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+

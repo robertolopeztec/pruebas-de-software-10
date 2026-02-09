@@ -1,0 +1,66 @@
+---
+Testing computeStatistics.py with ../tests/
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC1.txt
+- mean : 242.32
+- median : 239.5
+- mode : 393.0
+- std. dev : 145.44002062361477
+- variance : 21152.79959899749
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC2.txt
+- mean : 250.7840161861406
+- median : 247.0
+- mode : 230.0
+- std. dev : 144.20779467138226
+- variance : 20795.888043983545
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC3.txt
+- mean : 249.77621989860583
+- median : 249.0
+- mode : 94.0
+- std. dev : 145.3236057694065
+- variance : 21118.950393821877
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC4.txt
+- mean : 149.00267347908746
+- median : 147.75
+- mode : 123.75
+- std. dev : 130.41958525663028
+- variance : 17009.268218511457
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC5.txt
+could not convert string to float: 'ABA'
+could not convert string to float: '23,45'
+could not convert string to float: '11;54'
+could not convert string to float: 'll'
+- mean : 241.49511400651465
+- median : 241.0
+- mode : 393.0
+- std. dev : 145.70234164786086
+- variance : 21229.17236166997
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC6.txt
+- mean : 1.8790659927977443e+20
+- median : 1.88008049965543e+20
+- mode : 1.27620004531949e+20
+- std. dev : 1.0739995165766761e+20
+- variance : 1.1534749616069338e+40
+---
+
+- TESTING computeStatistics.py ON: ../tests//TC7.txt
+could not convert string to float: 'ABBA'
+could not convert string to float: 'ERROR'
+- mean : 2.4746739549971625e+20
+- median : 2.4664097307429e+20
+- mode : 1.57638329490099e+20
+- std. dev : 1.4461131060123329e+20
+- variance : 2.0912431153806367e+40
+---
+
