@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 This script takes two files as parameters.
-* The first one contains information in a JSON format about a catalogue of prices of products.
+* The first one contains information in a JSON format about
+  a catalogue of prices of products.
 * The second one contains a record for all sales in a company.
 
 The output is the computation of total cost for all sales.
@@ -35,7 +36,7 @@ def compute_sales_product_count(sales_file: str) -> dict:
     # Generate a dictionary that gets the product and the quantity
     # and sums the quantity
     sales_product_count = {}
-    
+
     for sale in sales_file:
         product = sale['Product']
         quantity = sale['Quantity']
@@ -43,8 +44,8 @@ def compute_sales_product_count(sales_file: str) -> dict:
         if product in sales_product_count:
             sales_product_count[product] += quantity
         else:
-            sales_product_count[product] = quantity    
-    
+            sales_product_count[product] = quantity
+
     return sales_product_count
 
 
@@ -60,10 +61,8 @@ def get_price_product_catalogue(price_catalogue_file: str) -> dict:
         product = price_product['title']
         price = price_product['price']
         price_product_catalogue[product] = price
-        
-    return price_product_catalogue
 
-    
+    return price_product_catalogue
 
 
 def compute_total_cost(sales_file: str, price_catalogue_file: str) -> None:
@@ -77,7 +76,7 @@ def compute_total_cost(sales_file: str, price_catalogue_file: str) -> None:
     sales_product_count = compute_sales_product_count(sales_file)
 
     price_product_catalogue = get_price_product_catalogue(price_catalogue_file)
-    
+
     # Now, for each product count get its price and add it to the total
     for product, quantity in sales_product_count.items():
         try:
@@ -88,6 +87,16 @@ def compute_total_cost(sales_file: str, price_catalogue_file: str) -> None:
 
     return total_cost
 
+
+def write_result(result: str) -> None:
+    """
+    Given a string with the results of the program, then write it.
+    """
+    with open('./SalesResults.txt', 'w', encoding='utf8') as f:
+        f.write(result)
+        f.close()
+
+
 if __name__ == '__main__':
 
     # Set the start time to compute the elapsing runtime
@@ -97,13 +106,13 @@ if __name__ == '__main__':
     price_catalogue_file_ = sys.argv[1]
     sales_file_ = sys.argv[2]
 
-    total_cost = compute_total_cost(sales_file_, price_catalogue_file_)
+    total_cost_ = compute_total_cost(sales_file_, price_catalogue_file_)
 
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    
-    print(f'TOTAL COST: ${total_cost:.2f} | ELAPSED TIME: {elapsed_time:.4f} SECONDS')
-    
 
-    
+    result_ = f'TOTAL COST: ${total_cost_:,.2f} | '
+    result_ += f'ELAPSED TIME: {elapsed_time:.4f} SECONDS'
 
+    print(result_)
+    write_result(result_)
