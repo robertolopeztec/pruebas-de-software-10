@@ -82,8 +82,10 @@ def compute_total_cost(sales_file: str, price_catalogue_file: str) -> None:
         try:
             product_price = price_product_catalogue[product]
             total_cost += quantity * product_price
-        except TypeError as e:
-            print(e)
+        except TypeError as te:
+            print(te)
+        except KeyError as ke:
+            print(ke)
 
     return total_cost
 
