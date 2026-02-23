@@ -4,6 +4,7 @@ This file contains the core objects for the reservation system.
 """
 import os
 import json
+import random
 
 CATALOGUE_DIR = 'app/data/'
 
@@ -34,6 +35,7 @@ class Hotel():
     """
     def __init__(self):
         self.hotel_file = os.path.join(CATALOGUE_DIR, 'hotels.json')
+        self.reservation_file = os.path.join(CATALOGUE_DIR, 'reservations.json')
 
     def create_hotel(self, hotel_id: int, hotel_name: str, hotel_rooms: int):
         """
@@ -111,6 +113,38 @@ class Hotel():
 
         write_content_to_file(content, self.hotel_file)
 
+    def reserve_a_room(self, hotel_id: int,
+                       hotel_room_number: int,
+                       guest: str = 'anon'
+                      ):
+        """
+        Reserve a room given hotel_id, the room number and the guest.
+        The guest can be anonymous, it's the default.
+        """
+
+        # Get the reservation id
+        hotel_content = read_content_from_file(self.hotel_file)
+        hotel_ids = list({hotel['id'] for hotel in hotel_content})
+
+        # Validate if the hotel exists.
+        if hotel_id not in hotel_ids:
+            raise ValueError(f'hotel_id={hotel_id} NOT in catalogue!')
+
+        # If the validation passes, then consolidate the attributes and
+        # update the reservations data
+        reservation_id = random.randint(1, 999)
+        reservation_content = read_content_from_file(self.reservation_file)
+        
+        reservation_attrs = {
+            'id': reservation_id,
+            'hotel_id': hotel_id,
+            'hotel_room_number': hotel_room_number,
+            'guest': guest
+        }
+        
+        reservation_content.append(reservation_attrs)
+        write_content_to_file(reservation_content, self.reservation_file)
+
 
 if __name__ == '__main__':
     h = Hotel()
@@ -120,5 +154,6 @@ if __name__ == '__main__':
     # print(h.delete_hotel(2))
     # print(h.display_hotel_information(123))
     # print(h.modify_hotel_information(123, 'rooms', 100))
+    print(h.reserve_a_room(123, 11,))
 
     

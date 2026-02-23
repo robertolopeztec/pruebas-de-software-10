@@ -22,5 +22,8 @@ class TestHotel(unittest.TestCase):
         self.assertRaises(ValueError, self.hotel.modify_hotel_information,
                           123, 'foo', 'var')
 
+    def test_reserve_a_room_hotel_doesnt_exists(self):
+        self.assertRaises(ValueError, self.hotel.reserve_a_room, -1, 1, 'anon')
+
 if __name__ == '__main__':
     unittest.main()
