@@ -77,6 +77,17 @@ class Hotel():
                           ]
         write_content_to_file(cleaned_content, self.hotel_file)
 
+    
+    def display_hotel_information(self, hotel_id: int):
+        """
+        Given a hotel id, then display its information.
+        """
+        content = read_content_from_file(self.hotel_file)
+        hotel = [hotel for hotel in content
+                 if hotel['id'] == hotel_id
+                ][0]
+
+        print(hotel)
 
 if __name__ == '__main__':
     h = Hotel()
@@ -84,5 +95,6 @@ if __name__ == '__main__':
     # print(h.create_hotel(2, 'Mexicanito', 10))
     # h.delete_hotel('s')
     # print(h.delete_hotel(2))
+    print(h.display_hotel_information(123))
 
     
