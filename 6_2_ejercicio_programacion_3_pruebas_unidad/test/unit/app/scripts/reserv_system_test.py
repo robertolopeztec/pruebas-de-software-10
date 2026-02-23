@@ -1,8 +1,8 @@
 import unittest
 import sys
 import os
-sys.path.append(os.getenv('ROOT_PATH'))
 
+sys.path.append(os.getenv('ROOT_PATH'))
 from app.scripts.reserv_system import Hotel
 
 class TestHotel(unittest.TestCase):
@@ -13,9 +13,14 @@ class TestHotel(unittest.TestCase):
         self.assertRaises(TypeError, self.hotel.create_hotel,
                           'a', 'b', 'c'
                          )
+    
     def test_delete_hotel_raises_typeeror_if_not_int(self):
         self.assertRaises(TypeError, self.hotel.delete_hotel, 'a')
 
+    def test_modify_hotel_information_raises_valueerror_if_not_in_valid_hotel_attrs(self):
+        valid_hotel_attrs = ['id', 'name', 'rooms']
+        self.assertRaises(ValueError, self.hotel.modify_hotel_information,
+                          123, 'foo', 'var')
 
 if __name__ == '__main__':
     unittest.main()

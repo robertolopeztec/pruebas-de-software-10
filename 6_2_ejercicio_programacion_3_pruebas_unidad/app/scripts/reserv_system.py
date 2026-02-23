@@ -89,12 +89,36 @@ class Hotel():
 
         print(hotel)
 
+    def modify_hotel_information(self, hotel_id: int, hotel_attr: str, hotel_val: [str, int]):
+        """
+        This function modifies the information for a single attribute for a hotel, given its id,
+        the attribute and the actual value to modify.
+        """
+        content = read_content_from_file(self.hotel_file)
+
+        # Validate if the hotel attribute to modify is available within the schema
+        valid_hotel_attrs = ['id', 'name', 'rooms']
+        if hotel_attr not in valid_hotel_attrs:
+            raise ValueError(f'{hotel_attr} not in {valid_hotel_attrs}')
+
+        # Find the hotel to change, modify its attribute, replace it in its original index
+        # and then overwrite the catalogue with the new information
+        ix, hotel_to_change = [(i, hotel) for i, hotel in enumerate(content)
+                              if hotel['id'] == hotel_id][0]
+        
+        hotel_to_change[hotel_attr] = hotel_val
+        content[ix] = hotel_to_change
+
+        write_content_to_file(content, self.hotel_file)
+
+
 if __name__ == '__main__':
     h = Hotel()
     print(h.hotel_file)
     # print(h.create_hotel(2, 'Mexicanito', 10))
     # h.delete_hotel('s')
     # print(h.delete_hotel(2))
-    print(h.display_hotel_information(123))
+    # print(h.display_hotel_information(123))
+    # print(h.modify_hotel_information(123, 'rooms', 100))
 
     
