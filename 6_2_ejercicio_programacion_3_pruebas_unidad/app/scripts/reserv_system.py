@@ -225,7 +225,46 @@ class Customer():
         customer[customer_attr] = customer_value
         customer_content[i] = customer
         write_content_to_file(customer_content, self.customer_file)
-        
+
+class Reservation():
+    """
+    The core reservation object.
+    """
+
+    def __init__(self):
+        self.reservation_file = os.path.join(CATALOGUE_DIR, 'reservations.json')
+
+    def create_a_reservation(self, customer_id: int, hotel_id: int):
+        """
+        Given a customer_id and a hotel_id, it will create a reservation.
+        Let the hotel room number be 999 as a placeholder.
+        """
+
+        reservation_content = read_content_from_file(self.reservation_file)
+
+        reservation_id = random.randint(1, 999)
+        reservation_attr = {
+            'id': reservation_id,
+            'hotel_id': hotel_id,
+            'hotel_room_number': 999,
+            'guest_id': customer_id,
+        }
+
+        reservation_content.append(reservation_attr)
+        write_content_to_file(reservation_content, self.reservation_file)
+
+    def cancel_a_reservation(self, reservation_id: int):
+        """
+        Given a reservation id, then cancel it. i.e. remove it from the data catalog.
+        """
+
+        reservation_content = read_content_from_file(self.reservation_file)
+        i = [i for i, reservation in enumerate(reservation_content)
+             if reservation['id'] == reservation_id][0]
+
+        del reservation_content[i]
+
+        write_content_to_file(reservation_content, self.reservation_file)
 
 if __name__ == '__main__':
     h = Hotel()
@@ -245,4 +284,9 @@ if __name__ == '__main__':
     # print(c.display_customer_information(123))
     # print(c.modify_customer_information(123, 'email', 'roger@outlook.es'))
 
+    #---
+    r = Reservation()
+    # print(r.reservation_file)
+    # print(r.create_a_reservation(123, 123))
+    # print(r.cancel_a_reservation(641))
     
