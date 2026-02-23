@@ -8,6 +8,7 @@ import random
 
 CATALOGUE_DIR = 'app/data/'
 
+
 def read_content_from_file(file: str) -> None:
     """
     This function takes a filepath as input and opens a data file.
@@ -35,7 +36,8 @@ class Hotel():
     """
     def __init__(self):
         self.hotel_file = os.path.join(CATALOGUE_DIR, 'hotels.json')
-        self.reservation_file = os.path.join(CATALOGUE_DIR, 'reservations.json')
+        self.reservation_file = os.path.join(CATALOGUE_DIR,
+                                             'reservations.json')
 
     def create_hotel(self, hotel_id: int, hotel_name: str, hotel_rooms: int):
         """
@@ -79,45 +81,46 @@ class Hotel():
                           ]
         write_content_to_file(cleaned_content, self.hotel_file)
 
-    
     def display_hotel_information(self, hotel_id: int):
         """
         Given a hotel id, then display its information.
         """
         content = read_content_from_file(self.hotel_file)
-        hotel = [hotel for hotel in content
-                 if hotel['id'] == hotel_id
-                ][0]
+        hotel = [hotel for hotel in content if hotel['id'] == hotel_id][0]
 
         print(hotel)
 
-    def modify_hotel_information(self, hotel_id: int, hotel_attr: str, hotel_val: [str, int]):
+    def modify_hotel_information(self,
+                                 hotel_id: int,
+                                 hotel_attr: str,
+                                 hotel_val: [str, int]):
         """
-        This function modifies the information for a single attribute for a hotel, given its id,
-        the attribute and the actual value to modify.
+        This function modifies the information for a single attribute for hotel
+        given its id,the attribute and the actual value to modify.
         """
         content = read_content_from_file(self.hotel_file)
 
-        # Validate if the hotel attribute to modify is available within the schema
+        # Validate if the hotel attribute to modify is available
+        # within the schema
         valid_hotel_attrs = ['id', 'name', 'rooms']
         if hotel_attr not in valid_hotel_attrs:
             raise ValueError(f'{hotel_attr} not in {valid_hotel_attrs}')
 
-        # Find the hotel to change, modify its attribute, replace it in its original index
-        # and then overwrite the catalogue with the new information
-        ix, hotel_to_change = [(i, hotel) for i, hotel in enumerate(content)
-                              if hotel['id'] == hotel_id][0]
-        
+        # Find the hotel to change, modify its attribute, replace
+        # it in its original index and then overwrite the
+        # catalogue with the new information
+        ix, hotel_to_change = [(i, hotel)
+                               for i, hotel in enumerate(content)
+                               if hotel['id'] == hotel_id][0]
+
         hotel_to_change[hotel_attr] = hotel_val
         content[ix] = hotel_to_change
 
         write_content_to_file(content, self.hotel_file)
 
-    
     def reserve_a_room(self, hotel_id: int,
                        hotel_room_number: int,
-                       guest: str = 'anon'
-                      ):
+                       guest: str = 'anon'):
         """
         Reserve a room given hotel_id, the room number and the guest.
         The guest can be anonymous, it's the default.
@@ -135,25 +138,24 @@ class Hotel():
         # update the reservations data
         reservation_id = random.randint(1, 999)
         reservation_content = read_content_from_file(self.reservation_file)
-        
+
         reservation_attrs = {
             'id': reservation_id,
             'hotel_id': hotel_id,
             'hotel_room_number': hotel_room_number,
             'guest': guest
         }
-        
+
         reservation_content.append(reservation_attrs)
         write_content_to_file(reservation_content, self.reservation_file)
 
-    
     def cancel_a_reservation(self, reservation_id: int):
         """
         Given a reservation id, then remove it from the reservations data.
         """
 
         reservation_content = read_content_from_file(self.reservation_file)
-        
+
         # Find the id for the reservation
         i = [i for i, reservation in enumerate(reservation_content)
              if reservation['id'] == reservation_id][0]
@@ -176,7 +178,8 @@ class Customer():
         Create a new customer
         """
 
-        # Get the current information on customers and add the new customer attributes
+        # Get the current information on customers and add
+        # the new customer attributes
         customer_content = read_content_from_file(self.customer_file)
 
         customer_id = random.randint(1, 999)
@@ -197,7 +200,8 @@ class Customer():
 
         # Get the index of the customer with the specified id
         i = [i for i, customer in enumerate(customer_content)
-            if customer['id'] == customer_id][0]
+             if customer['id'] == customer_id][0]
+
         del customer_content[i]
 
         write_content_to_file(customer_content, self.customer_file)
@@ -213,18 +217,23 @@ class Customer():
 
         print(customer)
 
-    def modify_customer_information(self, customer_id: str, customer_attr: str, customer_value: [str, int]):
+    def modify_customer_information(self, customer_id: str,
+                                    customer_attr: str,
+                                    customer_value: [str, int]):
         """
-        Given a customer id, then modify its attribute with the new customer value.
+        Given a customer id, then modify its attribute with
+        the new customer value.
         """
 
         customer_content = read_content_from_file(self.customer_file)
-        i, customer = [(i, customer) for i, customer in enumerate(customer_content)
-                        if customer['id'] == customer_id][0]
+        i, customer = [(i, customer) for i, customer
+                       in enumerate(customer_content)
+                       if customer['id'] == customer_id][0]
 
         customer[customer_attr] = customer_value
         customer_content[i] = customer
         write_content_to_file(customer_content, self.customer_file)
+
 
 class Reservation():
     """
@@ -232,7 +241,8 @@ class Reservation():
     """
 
     def __init__(self):
-        self.reservation_file = os.path.join(CATALOGUE_DIR, 'reservations.json')
+        self.reservation_file = os.path.join(CATALOGUE_DIR,
+                                             'reservations.json')
 
     def create_a_reservation(self, customer_id: int, hotel_id: int):
         """
@@ -255,7 +265,8 @@ class Reservation():
 
     def cancel_a_reservation(self, reservation_id: int):
         """
-        Given a reservation id, then cancel it. i.e. remove it from the data catalog.
+        Given a reservation id, then cancel it. i.e. remove
+        it from the data catalog.
         """
 
         reservation_content = read_content_from_file(self.reservation_file)
@@ -265,6 +276,7 @@ class Reservation():
         del reservation_content[i]
 
         write_content_to_file(reservation_content, self.reservation_file)
+
 
 if __name__ == '__main__':
     h = Hotel()
@@ -277,16 +289,15 @@ if __name__ == '__main__':
     # print(h.reserve_a_room(123, 11,))
     # print(h.cancel_a_reservation(957))
 
-    #---
+    # ---
     c = Customer()
     # print(c.create_customer('Luffy', 'Luffy@pirates.mx'))
     # print(c.delete_customer(48))
     # print(c.display_customer_information(123))
     # print(c.modify_customer_information(123, 'email', 'roger@outlook.es'))
 
-    #---
+    # ---
     r = Reservation()
     # print(r.reservation_file)
     # print(r.create_a_reservation(123, 123))
     # print(r.cancel_a_reservation(641))
-    
