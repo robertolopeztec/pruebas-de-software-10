@@ -113,6 +113,7 @@ class Hotel():
 
         write_content_to_file(content, self.hotel_file)
 
+    
     def reserve_a_room(self, hotel_id: int,
                        hotel_room_number: int,
                        guest: str = 'anon'
@@ -145,6 +146,23 @@ class Hotel():
         reservation_content.append(reservation_attrs)
         write_content_to_file(reservation_content, self.reservation_file)
 
+    
+    def cancel_a_reservation(self, reservation_id: int):
+        """
+        Given a reservation id, then remove it from the reservations data.
+        """
+
+        reservation_content = read_content_from_file(self.reservation_file)
+        
+        # Find the id for the reservation
+        i = [i for i, reservation in enumerate(reservation_content)
+             if reservation['id'] == reservation_id][0]
+
+        del reservation_content[i]
+
+        # Now, rewrite the reservation without the cancelled one.
+        write_content_to_file(reservation_content, self.reservation_file)
+
 
 if __name__ == '__main__':
     h = Hotel()
@@ -154,6 +172,7 @@ if __name__ == '__main__':
     # print(h.delete_hotel(2))
     # print(h.display_hotel_information(123))
     # print(h.modify_hotel_information(123, 'rooms', 100))
-    print(h.reserve_a_room(123, 11,))
+    # print(h.reserve_a_room(123, 11,))
+    print(h.cancel_a_reservation(957))
 
     

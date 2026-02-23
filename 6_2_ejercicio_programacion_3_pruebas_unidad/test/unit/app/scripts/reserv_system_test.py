@@ -25,5 +25,10 @@ class TestHotel(unittest.TestCase):
     def test_reserve_a_room_hotel_doesnt_exists(self):
         self.assertRaises(ValueError, self.hotel.reserve_a_room, -1, 1, 'anon')
 
+
+    def test_cancel_a_reservation_raises_indexerror_if_reservation_id_doesnt_exists(self):
+        self.assertRaises(IndexError, self.hotel.cancel_a_reservation, -1)
+
+
 if __name__ == '__main__':
     unittest.main()
