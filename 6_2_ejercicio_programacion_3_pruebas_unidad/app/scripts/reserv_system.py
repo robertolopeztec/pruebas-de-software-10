@@ -7,7 +7,6 @@ import json
 
 CATALOGUE_DIR = 'app/data/'
 
-
 def read_content_from_file(file: str) -> None:
     """
     This function takes a filepath as input and opens a data file.
@@ -18,6 +17,7 @@ def read_content_from_file(file: str) -> None:
         f.close()
     return content
 
+
 def write_content_to_file(content: dict, file: str) -> None:
     """
     This function takes a .JSON-like content and writes it into a file.
@@ -27,8 +27,7 @@ def write_content_to_file(content: dict, file: str) -> None:
         json.dump(content, f, indent=4)
     f.close()
 
-    return
-    
+
 class Hotel():
     """
     The core Hotel class
@@ -63,11 +62,27 @@ class Hotel():
         content.append(hotel)
         write_content_to_file(content, self.hotel_file)
 
-        return
+    def delete_hotel(self, hotel_id: int):
+        """
+        Given a hotel id, then remove it from the hotels catalogue.
+        """
+
+        if not isinstance(hotel_id, int):
+            raise TypeError(f'hotel_id {type(hotel_id)}; expected {str(int)}')
+
+        content = read_content_from_file(self.hotel_file)
+        cleaned_content = [
+                            hotel for hotel in content
+                            if hotel['id'] != hotel_id
+                          ]
+        write_content_to_file(cleaned_content, self.hotel_file)
+
 
 if __name__ == '__main__':
     h = Hotel()
     print(h.hotel_file)
-    print(h.create_hotel(2, 'Mexicanito', 10))
+    # print(h.create_hotel(2, 'Mexicanito', 10))
+    # h.delete_hotel('s')
+    # print(h.delete_hotel(2))
 
     
