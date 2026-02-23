@@ -164,15 +164,85 @@ class Hotel():
         write_content_to_file(reservation_content, self.reservation_file)
 
 
+class Customer():
+    """
+    This is the core customer object.
+    """
+    def __init__(self):
+        self.customer_file = os.path.join(CATALOGUE_DIR, 'customers.json')
+
+    def create_customer(self, customer_name: str, customer_email: str):
+        """
+        Create a new customer
+        """
+
+        # Get the current information on customers and add the new customer attributes
+        customer_content = read_content_from_file(self.customer_file)
+
+        customer_id = random.randint(1, 999)
+        customer_attrs = {
+            'id': customer_id,
+            'name': customer_name,
+            'email': customer_email,
+        }
+
+        customer_content.append(customer_attrs)
+        write_content_to_file(customer_content, self.customer_file)
+
+    def delete_customer(self, customer_id: int):
+        """
+        Given a customer id, then remove it from the catalogue.
+        """
+        customer_content = read_content_from_file(self.customer_file)
+
+        # Get the index of the customer with the specified id
+        i = [i for i, customer in enumerate(customer_content)
+            if customer['id'] == customer_id][0]
+        del customer_content[i]
+
+        write_content_to_file(customer_content, self.customer_file)
+
+    def display_customer_information(self, customer_id: int):
+        """
+        Given a customer id, then display its information.
+        """
+
+        customer_content = read_content_from_file(self.customer_file)
+        customer = [customer for customer in customer_content
+                    if customer['id'] == customer_id][0]
+
+        print(customer)
+
+    def modify_customer_information(self, customer_id: str, customer_attr: str, customer_value: [str, int]):
+        """
+        Given a customer id, then modify its attribute with the new customer value.
+        """
+
+        customer_content = read_content_from_file(self.customer_file)
+        i, customer = [(i, customer) for i, customer in enumerate(customer_content)
+                        if customer['id'] == customer_id][0]
+
+        customer[customer_attr] = customer_value
+        customer_content[i] = customer
+        write_content_to_file(customer_content, self.customer_file)
+        
+
 if __name__ == '__main__':
     h = Hotel()
-    print(h.hotel_file)
+    # print(h.hotel_file)
     # print(h.create_hotel(2, 'Mexicanito', 10))
     # h.delete_hotel('s')
     # print(h.delete_hotel(2))
     # print(h.display_hotel_information(123))
     # print(h.modify_hotel_information(123, 'rooms', 100))
     # print(h.reserve_a_room(123, 11,))
-    print(h.cancel_a_reservation(957))
+    # print(h.cancel_a_reservation(957))
+
+    #---
+    c = Customer()
+    # print(c.create_customer('Luffy', 'Luffy@pirates.mx'))
+    # print(c.delete_customer(48))
+    # print(c.display_customer_information(123))
+    # print(c.modify_customer_information(123, 'email', 'roger@outlook.es'))
 
     

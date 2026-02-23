@@ -1,7 +1,8 @@
 [
     {
-        "id": 2456,
+        "id": 817,
         "hotel_id": 123,
-        "room": 54
+        "hotel_room_number": 11,
+        "guest": "anon"
     }
 ]
